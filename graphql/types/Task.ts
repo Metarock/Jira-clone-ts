@@ -9,7 +9,8 @@ export const Task = objectType({
         t.string('title');
         t.string('description');
         t.string('status');
-        t.list.field('users', {
+        t.string('userId');
+        t.field('user', {
             type: User,
             async resolve(parent, _args, ctx) {
                 return await ctx.prisma.task
@@ -34,7 +35,6 @@ export const TasksQuery = extendType({
                 return ctx.prisma.task.findMany();
             },
         });
-
         // get task by user id
         t.field('task', {
             type: 'Task',
@@ -51,8 +51,6 @@ export const TasksQuery = extendType({
         });
     },
 });
-
-// Mutation for task
 
 export const TaskMutation = extendType({
     type: 'Mutation',
